@@ -34,6 +34,7 @@ window._snw_side_loader_v2 = function (w, d, l, h) {
         headers.append("User-Agent", w.navigator.userAgent);
 
         const req = new Request(url);
+        d.body.style.cursor = "wait";
 
         fetch(req, {
             method: "GET",
@@ -57,6 +58,7 @@ window._snw_side_loader_v2 = function (w, d, l, h) {
             .catch(function (err) {
                 // failed to load, so just navigate to the page
                 w.location.href = url;
+                d.body.style.cursor = "inherit";
             });
     }
 
@@ -80,6 +82,7 @@ window._snw_side_loader_v2 = function (w, d, l, h) {
 
         h.pushState({}, null, url);
         w.scrollTo(0, 0);
+        d.body.style.cursor = "inherit";
         scanLinks("#" + id);
     }
 
