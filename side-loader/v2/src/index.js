@@ -1,5 +1,24 @@
+/*
+    Use 'onSideLoadChange' to run code when the page changes, like re-initializing widgets.
+
+    ```
+        document.addEventListener("onSideLoadChange", function(e) {
+            if (twttr !== undefined) {
+                twttr.widgets.load();
+            }
+            if (document.querySelector('[data-nowplaying="history"]')) {
+                window._snw_refreshNowPlaying();
+            }
+        });
+    ```
+
+*/
 window._snw_side_loader_v2 = function (w, d, l, h) {
     var ORIG = window.location.origin;
+    var onChangeEvent = new Event("onSideLoadChange", {
+        bubbles: true,
+        cancelable: true,
+    });
 
     function init() {
         scanLinks(null);
@@ -96,6 +115,7 @@ window._snw_side_loader_v2 = function (w, d, l, h) {
         w.scrollTo(0, 0);
         d.body.style.cursor = "inherit";
         scanLinks("#" + id);
+        document.dispatchEvent(onChangeEvent);
     }
 
     d.addEventListener("DOMContentLoaded", function () {
